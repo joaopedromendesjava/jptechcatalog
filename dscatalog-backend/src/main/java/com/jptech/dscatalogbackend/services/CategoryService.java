@@ -1,6 +1,7 @@
 package com.jptech.dscatalogbackend.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,16 @@ public class CategoryService {
 		
 		List<Category> list = categoryRepository.findAll();
 		List<CategoryDTO> categoryDTOs = list.stream().map(c -> new CategoryDTO(c)).toList();
-		
+
 		return categoryDTOs;
+	}
+	
+	@Transactional(readOnly = true)
+	public CategoryDTO findById(long id){
+		
+		Optional<Category> cat = categoryRepository.findById(id);
+		Category category = cat.get();
+		
+		return new CategoryDTO(category);
 	}
 }
