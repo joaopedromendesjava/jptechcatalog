@@ -1,7 +1,9 @@
 package com.jptech.dscatalogbackend.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,6 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "tb_category")
 public class Category implements Serializable{
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -24,13 +25,17 @@ public class Category implements Serializable{
 	@NotNull
 	private String name;
 	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant created_At;
+	
 	public Category() {
 		
 	}
 
-	public Category(Long id, String name) {
+	public Category(Long id, String name, Instant createdAt) {
 		this.id = id;
 		this.name = name;
+		this.created_At = createdAt;
 	}
 
 	public Long getId() {
@@ -47,6 +52,14 @@ public class Category implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Instant getCreatedAt() {
+		return created_At;
+	}
+	
+	public void setCreatedAt(Instant createdAt) {
+		this.created_At = createdAt;
 	}
 
 	@Override

@@ -56,6 +56,7 @@ public class CategoryService {
 	public CategoryDTO update(Long id, CategoryDTO dto) {
 		
 		try {
+			@SuppressWarnings("deprecation")
 			Category categoryEntity = categoryRepository.getOne(id);
 			categoryEntity.setName(dto.getName());
 			categoryEntity = categoryRepository.saveAndFlush(categoryEntity);
