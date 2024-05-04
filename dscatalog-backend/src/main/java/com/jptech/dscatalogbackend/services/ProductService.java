@@ -9,8 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jptech.dscatalogbackend.dto.CategoryDTO;
 import com.jptech.dscatalogbackend.dto.ProductDTO;
+import com.jptech.dscatalogbackend.entities.Category;
 import com.jptech.dscatalogbackend.entities.Product;
+import com.jptech.dscatalogbackend.repositories.CategoryRepository;
 import com.jptech.dscatalogbackend.repositories.ProductRepository;
 import com.jptech.dscatalogbackend.services.exceptions.DatabaseException;
 import com.jptech.dscatalogbackend.services.exceptions.ResourceNotFoundException;
@@ -23,6 +26,9 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private CategoryRepository CategoryRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(PageRequest pageRequest){
@@ -45,11 +51,11 @@ public class ProductService {
 	@Transactional
 	public ProductDTO insert(@Valid ProductDTO dto) {
 		
-		 Product product = new Product();
-		//product.setName(dto.getName());
+		Product product = new Product();
+		copyDtoToProduct(dto,product);
 		product = productRepository.save(product);
 		
-		return new ProductDTO(product);
+		return new ProductDTO(product, product.getCategories());
 	}
 	
 	@Transactional
@@ -58,15 +64,14 @@ public class ProductService {
 		try {
 			@SuppressWarnings("deprecation")
 			Product productEntity = productRepository.getOne(id);
-			//productEntity.setName(dto.getName());
-			productEntity = productRepository.saveAndFlush(productEntity);
-			return new ProductDTO(productEntity);
+			copyDtoToProduct(dto,productEntity);
+			productEntity = productRepository.save(productEntity);
+			return new ProductDTO(productEntity, productEntity.getCategories());
 			
 		}catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found: " + id);
 		}
 	}
-
 	public void delete(Long id) {
 		try {
 			if (!productRepository.existsById(id)) {
@@ -76,6 +81,21 @@ public class ProductService {
 			}
 		}catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity violation: " + id);
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void copyDtoToProduct(ProductDTO dto, Product productEntity) {
+		productEntity.setName(dto.getName());
+		productEntity.setDescription(dto.getDescription());
+		productEntity.setDate(dto.getDate());
+		productEntity.setImgUrl(dto.getImgUrl());
+		productEntity.setPrice(dto.getPrice());
+		
+		productEntity.getCategories().clear();
+		for (CategoryDTO categoryDTO : dto.getcategories()) {
+			Category category = CategoryRepository.getOne(categoryDTO.getId());
+			productEntity.getCategories().add(category);
 		}
 	}
 }
