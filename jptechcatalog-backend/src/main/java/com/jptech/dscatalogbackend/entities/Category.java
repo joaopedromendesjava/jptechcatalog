@@ -2,12 +2,15 @@ package com.jptech.dscatalogbackend.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +30,9 @@ public class Category implements Serializable{
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant created_At;
+	
+	@ManyToMany(mappedBy = "categories")
+	Set<Product> products = new HashSet<>();
 	
 	public Category() {
 		
@@ -60,6 +66,10 @@ public class Category implements Serializable{
 	
 	public void setCreatedAt(Instant createdAt) {
 		this.created_At = createdAt;
+	}
+	
+	public Set<Product> getProducts() {
+		return products;
 	}
 
 	@Override
