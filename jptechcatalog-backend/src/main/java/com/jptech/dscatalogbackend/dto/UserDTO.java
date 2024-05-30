@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.jptech.dscatalogbackend.entities.User;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -19,7 +18,6 @@ public class UserDTO {
 	private String lastName;
 	
 	@Email(message = "Email deve ser válido")
-	@Column(unique = true)
 	private String email;
 	
 	Set<RoleDTO> roles = new HashSet<>();
