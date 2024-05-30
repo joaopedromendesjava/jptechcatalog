@@ -5,8 +5,8 @@ import java.util.Set;
 
 import com.jptech.dscatalogbackend.entities.User;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 public class UserDTO {
 

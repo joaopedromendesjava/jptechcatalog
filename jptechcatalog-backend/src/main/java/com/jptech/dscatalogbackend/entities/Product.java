@@ -5,21 +5,14 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_product")
@@ -35,8 +28,6 @@ public class Product implements Serializable{
 	private Double price;
 	private String imgUrl;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreationTimestamp(source = SourceType.DB)
 	private Instant created_At = Instant.now();
 	
 	@ManyToMany
@@ -49,7 +40,7 @@ public class Product implements Serializable{
 	
 	}
 
-	public Product(Long id, @NotNull @NotEmpty String name, String description, Double price, String imgUrl,
+	public Product(Long id, String name, String description, Double price, String imgUrl,
 			Instant date) {
 		this.id = id;
 		this.name = name;

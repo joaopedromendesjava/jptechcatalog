@@ -18,8 +18,8 @@ import com.jptech.dscatalogbackend.repositories.ProductRepository;
 import com.jptech.dscatalogbackend.services.exceptions.DatabaseException;
 import com.jptech.dscatalogbackend.services.exceptions.ResourceNotFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 @Service
 public class ProductService {

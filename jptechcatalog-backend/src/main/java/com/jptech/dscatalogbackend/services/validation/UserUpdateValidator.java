@@ -12,9 +12,9 @@ import com.jptech.dscatalogbackend.entities.User;
 import com.jptech.dscatalogbackend.repositories.UserRepository;
 import com.jptech.dscatalogbackend.services.exceptions.FieldMessage;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 															//implementa a anotation e onde ela será usada
 public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserUpdateDTO> {
 	
@@ -44,7 +44,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
 		if (user != null && userId != user.getId()) {
 			list.add(new FieldMessage("email","Email já existe"));
 		}
-		
+	
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())

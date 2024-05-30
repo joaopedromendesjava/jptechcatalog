@@ -4,9 +4,11 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.FieldError;
@@ -19,9 +21,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.jptech.dscatalogbackend.services.exceptions.DatabaseException;
 import com.jptech.dscatalogbackend.services.exceptions.ResourceNotFoundException;
 import com.jptech.dscatalogbackend.services.exceptions.ValidationError;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
@@ -57,7 +56,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
-			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		ValidationError err = new ValidationError();
 		
@@ -92,7 +91,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(
-			Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+			Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus statusCode, WebRequest request) {
 				
 		StandardError err = new StandardError();
 		

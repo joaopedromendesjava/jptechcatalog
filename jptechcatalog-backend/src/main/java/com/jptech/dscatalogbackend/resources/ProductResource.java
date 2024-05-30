@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.jptech.dscatalogbackend.dto.ProductDTO;
 import com.jptech.dscatalogbackend.services.ProductService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/products")

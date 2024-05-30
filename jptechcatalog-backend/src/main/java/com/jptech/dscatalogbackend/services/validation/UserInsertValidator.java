@@ -10,8 +10,8 @@ import com.jptech.dscatalogbackend.entities.User;
 import com.jptech.dscatalogbackend.repositories.UserRepository;
 import com.jptech.dscatalogbackend.services.exceptions.FieldMessage;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 															//implementa a anotation e onde ela será usada
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
 	

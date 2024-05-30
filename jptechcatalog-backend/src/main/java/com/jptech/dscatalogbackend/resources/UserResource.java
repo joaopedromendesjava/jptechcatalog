@@ -23,7 +23,7 @@ import com.jptech.dscatalogbackend.dto.UserInsertDTO;
 import com.jptech.dscatalogbackend.dto.UserUpdateDTO;
 import com.jptech.dscatalogbackend.services.UserService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/users")

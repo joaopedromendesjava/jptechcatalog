@@ -9,9 +9,9 @@ import java.util.Set;
 import com.jptech.dscatalogbackend.entities.Category;
 import com.jptech.dscatalogbackend.entities.Product;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 public class ProductDTO implements Serializable{
 

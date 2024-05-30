@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.jptech.dscatalogbackend.dto.CategoryDTO;
 import com.jptech.dscatalogbackend.services.CategoryService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/categories")
