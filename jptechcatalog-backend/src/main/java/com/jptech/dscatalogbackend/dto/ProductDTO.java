@@ -18,7 +18,6 @@ public class ProductDTO implements Serializable{
 	private String description;
 	private Double price;
 	private String imgUrl;
-	private Instant date;
 	private List<CategoryDTO> categories = new ArrayList<>();
 	
 	public ProductDTO() {
@@ -31,7 +30,6 @@ public class ProductDTO implements Serializable{
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		this.date = date;
 	}
 	
 	public ProductDTO(Product product) {
@@ -40,7 +38,6 @@ public class ProductDTO implements Serializable{
 		this.description = product.getDescription();
 		this.price = product.getPrice();
 		this.imgUrl = product.getImgUrl();
-		this.date = product.getDate();
 	}
 	
 	public ProductDTO(Product product, Set<Category> categories) {
@@ -87,14 +84,6 @@ public class ProductDTO implements Serializable{
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
-	}
-
-	public Instant getDate() {
-		return date;
-	}
-
-	public void setDate(Instant date) {
-		this.date = date;
 	}
 	
 	public List<CategoryDTO> getcategories() {

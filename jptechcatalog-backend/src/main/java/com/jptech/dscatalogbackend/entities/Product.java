@@ -5,6 +5,9 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -35,8 +40,9 @@ public class Product implements Serializable{
 	private Double price;
 	private String imgUrl;
 	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant date;
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp(source = SourceType.DB)
+	private Instant created_At = Instant.now();
 	
 	@ManyToMany
 	@JoinTable(name = "tb_product_category",
@@ -55,7 +61,7 @@ public class Product implements Serializable{
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		this.date = date;
+		this.created_At = date;
 	}
 
 	public Long getId() {
@@ -99,11 +105,11 @@ public class Product implements Serializable{
 	}
 
 	public Instant getDate() {
-		return date;
+		return created_At;
 	}
 
 	public void setDate(Instant date) {
-		this.date = date;
+		this.created_At = date;
 	}
 
 	public Set<Category> getCategories() {
