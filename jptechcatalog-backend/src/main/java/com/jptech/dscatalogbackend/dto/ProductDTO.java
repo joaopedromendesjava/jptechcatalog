@@ -9,14 +9,26 @@ import java.util.Set;
 import com.jptech.dscatalogbackend.entities.Category;
 import com.jptech.dscatalogbackend.entities.Product;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 public class ProductDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotBlank(message = "Campo requerido")
 	private String name;
+	
+	@Column(columnDefinition = "TEXT")
+	@NotBlank(message = "Campo requerido")
 	private String description;
+	
+	@Positive(message = "Valor deve ser positivo")
 	private Double price;
+	
 	private String imgUrl;
 	private List<CategoryDTO> categories = new ArrayList<>();
 	

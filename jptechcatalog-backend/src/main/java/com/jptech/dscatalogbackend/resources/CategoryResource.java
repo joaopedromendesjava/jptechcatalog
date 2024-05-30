@@ -21,6 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.jptech.dscatalogbackend.dto.CategoryDTO;
 import com.jptech.dscatalogbackend.services.CategoryService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
@@ -49,7 +51,7 @@ public class CategoryResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto){
+	public ResponseEntity<CategoryDTO> insert(@Valid @RequestBody CategoryDTO dto){
 		
 		dto = categoryService.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -59,7 +61,7 @@ public class CategoryResource {
 	}
 	
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<CategoryDTO> update(@PathVariable(value = "id") Long id, @RequestBody CategoryDTO dto){
+	public ResponseEntity<CategoryDTO> update(@Valid @PathVariable(value = "id") Long id, @RequestBody CategoryDTO dto){
 		
 		dto = categoryService.update(id, dto);
 		return ResponseEntity.ok().body(dto);
