@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.jptech.dscatalogbackend.services.exceptions.DatabaseException;
 import com.jptech.dscatalogbackend.services.exceptions.ResourceNotFoundException;
+import com.jptech.dscatalogbackend.services.exceptions.ValidationError;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -51,6 +54,26 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 	
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
+		ValidationError err = new ValidationError();
+		
+		err.setTimestamp(Instant.now());
+		err.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value()); //entity nao foi possivel ser validada
+		err.setError("Validation exception");
+		err.setMessage(ex.getMessage());
+		err.setPath(request.getContextPath());
+		
+		for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+			err.addError(fieldError.getField(), fieldError.getDefaultMessage());
+		}
+		
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+	}
+	
 	
 	@ExceptionHandler(DatabaseException.class)
 	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest req){
