@@ -31,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		String tokenJWT = recoveryToken(request);
-		System.out.println(tokenJWT);
+		
 		if (tokenJWT != null) {
 			String subject = tokenService.getSubject(tokenJWT);
 			User user = userRepository.findByEmail(subject);

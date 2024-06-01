@@ -27,14 +27,15 @@ public class Authentication {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenDTO> Login(@RequestBody @Valid AuthLoginDTO user) {
-        UsernamePasswordAuthenticationToken authenticationToken = 
-        			new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-        var authentication = manager.authenticate(authenticationToken);
-        
-        String tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
-
-        return ResponseEntity.ok(new TokenDTO(tokenJWT));
+    public ResponseEntity<TokenDTO> Login(@RequestBody @Valid AuthLoginDTO user){
+    		
+	        UsernamePasswordAuthenticationToken authenticationToken = 
+	        			new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+	        var authentication = manager.authenticate(authenticationToken);
+	        
+	        String tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
+	        
+	     return ResponseEntity.ok(new TokenDTO(tokenJWT));
     }
 }
 

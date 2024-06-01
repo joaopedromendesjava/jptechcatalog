@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.jptech.dscatalogbackend.resources.exceptions.ForbiddenHandler;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -37,7 +39,8 @@ public class WebSecurityConfig {
 		.antMatchers(ADMIN).hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-		.build();
+		.exceptionHandling().accessDeniedHandler(new ForbiddenHandler())
+		.and().build();
 	}
 		
 	@Bean

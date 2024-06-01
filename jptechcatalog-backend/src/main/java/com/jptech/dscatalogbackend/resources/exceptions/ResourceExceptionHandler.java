@@ -7,10 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,6 +28,8 @@ import com.jptech.dscatalogbackend.services.exceptions.ValidationError;
 @ControllerAdvice
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 
+	private static final Logger logger = LoggerFactory.getLogger(ResourceExceptionHandler.class);
+	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest req){
 		
@@ -89,6 +94,21 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(httpStatus).body(err);
 	}
 	
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<StandardError> authenticate(AuthenticationException e, HttpServletRequest req){
+		
+		HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+		StandardError err = new StandardError();
+		
+		err.setTimestamp(Instant.now());
+		err.setStatus(httpStatus.value());
+		err.setError("Error in Authentication");
+		err.setMessage(e.getMessage());
+		err.setPath(req.getRequestURI());
+		log(e);
+		return ResponseEntity.status(httpStatus).body(err);
+	}
+	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(
 			Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus statusCode, WebRequest request) {
@@ -104,6 +124,10 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(err.getStatus()).body(err);
 		
 	}
+	
+	private void log(Throwable exception) { // Método para aparecer o log do erro no console
+	        logger.error("error message {}. Details:", exception.getMessage(), exception);
+	    }
 }
 
 
