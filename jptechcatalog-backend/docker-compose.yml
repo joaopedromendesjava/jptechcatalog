@@ -1,0 +1,28 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    env_file: ./env/pg.env
+    volumes:
+      - ./postgres-data:/var/lib/pg
+    restart: unless-stopped
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: postgres ping -h 127.0.0.1 -u $$POSTGRES_USER --password=$$POSTGRES_PASSWORD
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    image: joaopedromendesjava/jptech-catalog:v8
+    env_file: ./env/app.env
+    restart: unless-stopped
+    ports:
+      - "8085:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
