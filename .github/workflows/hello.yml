@@ -1,13 +1,38 @@
-name: HelloWorld
+name: CI/CD with Docker and GitHub Actions
 
 on:
   push:
     branches:
-      - 'master'
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Printing Hello World
-        run: echo "Hello World!"
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Build Docker image
+      run: docker build -t joaopedromendesjava/jptech-catalog:latest .
+      
+    - name: Log into Docker Hub
+      run: docker login -u joaopedromendesjava -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+      
+    - name: Push image to Docker Hub
+      run: docker push joaopedromendesjava/jptech-catalog:latest
+      
+  deploy:
+    runs-on: ubuntu-latest
+    
+    needs: build
+    
+    steps:
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.AWS_ACCESS_PEM }}
+        
+    - name: SSH into EC2 instance and update Docker Compose
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@52.3.248.185 "cd /home/ec2-user && docker-compose pull && docker-compose up -d"

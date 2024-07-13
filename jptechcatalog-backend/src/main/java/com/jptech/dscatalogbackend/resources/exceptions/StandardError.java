@@ -32,7 +32,7 @@ public class StandardError implements Serializable{
 	}
 
 	public String getError() {
-		return error;
+		return "Error test: " + error;
 	}
 
 	public void setError(String error) {
