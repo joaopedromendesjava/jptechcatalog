@@ -14,13 +14,13 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Build Docker image
-      run: docker build -t joaopedromendesjava/jptech-catalog:latest .
+      run: docker build -t joaopedromendesjava/jptech-catalog:latest . --context jptechcatalog-backend
       
     - name: Log into Docker Hub
       run: docker login -u joaopedromendesjava -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       
     - name: Push image to Docker Hub
-      run: docker push joaopedromendesjava/jptech-catalog:latest
+      run: docker push joaopedromendesjava/jptech-catalog:latest 
       
   deploy:
     runs-on: ubuntu-latest
