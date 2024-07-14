@@ -37,7 +37,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		err.setTimestamp(Instant.now());
 		err.setStatus(HttpStatus.NOT_FOUND.value());
-		err.setError("Resource Not Found");
+		err.setError("Resource Not Founds");
 		err.setMessage(e.getMessage());
 		err.setPath(req.getRequestURI());
 	
