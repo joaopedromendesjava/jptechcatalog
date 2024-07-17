@@ -35,4 +35,4 @@ jobs:
         
     - name: SSH into EC2 instance and update Docker Compose
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@52.3.248.185 "cd /home/ec2-user && docker-compose pull && docker-compose up -d"
+        ssh -o StrictHostKeyChecking=no ec2-user@52.87.231.198 "cd /home/ec2-user && docker-compose pull && docker-compose up -d"
