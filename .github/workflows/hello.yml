@@ -35,4 +35,4 @@ jobs:
         
     - name: SSH into EC2 instance and update Docker Compose
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-52-87-231-198.compute-1.amazonaws.com "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-157-130-193.compute-1.amazonaws.com "cd /home/ubuntu && docker-compose pull && docker-compose up -d"
