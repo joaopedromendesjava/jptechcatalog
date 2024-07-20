@@ -35,4 +35,4 @@ jobs:
         
     - name: SSH into EC2 instance and update Docker Compose
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-157-130-193.compute-1.amazonaws.com "sudo su && docker rm $(docker ps -a -q) && docker rmi $(docker images -a -q) && docker pull joaopedromendesjava/jptech-catalog:latest && docker run -p 80:8080 --name jptech-catalog-prod -e APP_PROFILE=prod -e DB_URL=jdbc:postgresql://pgjptech.chcsuyiyuiu7.us-east-1.rds.amazonaws.com:5432/pgjptech -e DB_USERNAME=postgres -e DB_PASSWORD=ADM-sa123 joaopedromendesjava/jptech-catalog:latest"
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-157-130-193.compute-1.amazonaws.com "sudo su && docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q) && docker pull joaopedromendesjava/jptech-catalog:latest && docker run -p 80:8080 --name jptech-catalog-prod -e APP_PROFILE=prod -e DB_URL=jdbc:postgresql://pgjptech.chcsuyiyuiu7.us-east-1.rds.amazonaws.com:5432/pgjptech -e DB_USERNAME=postgres -e DB_PASSWORD=ADM-sa123 joaopedromendesjava/jptech-catalog:latest"
