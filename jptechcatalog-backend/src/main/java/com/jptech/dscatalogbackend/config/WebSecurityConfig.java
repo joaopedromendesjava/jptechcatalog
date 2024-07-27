@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.jptech.dscatalogbackend.resources.exceptions.ForbiddenHandler;
+import com.jptech.dscatalogbackend.resources.exceptions.UnauthorizedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +41,7 @@ public class WebSecurityConfig {
 		.anyRequest().authenticated()
 		.and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 		.exceptionHandling().accessDeniedHandler(new ForbiddenHandler())
+		.and().exceptionHandling().authenticationEntryPoint(new UnauthorizedHandler())
 		.and().build();
 	}
 		
