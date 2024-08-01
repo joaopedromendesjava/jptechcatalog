@@ -68,7 +68,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler{
 		err.setTimestamp(Instant.now());
 		err.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value()); //entity nao foi possivel ser validada
 		err.setError("Validation exception");
-	//	err.setMessage(ex.getMessage());
+		err.setMessage(ex.getMessage());
 		err.setPath(request.getContextPath());
 		
 		for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
